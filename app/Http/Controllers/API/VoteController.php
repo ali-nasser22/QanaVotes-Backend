@@ -12,21 +12,37 @@ class VoteController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'candidate_id'=>'required|exists:candidates,id',
-            'vote_value'=>'required|in:1,-1',
+            'candidate_id' => 'required|exists:candidates,id',
+            'vote_value' => 'required|in:1,-1',
         ]);
-        $vote = Vote::create([
-            'user_id'=>auth()->user()->id,
-            'candidate_id'=>Crypt::encrypt($validated['candidate_id']),
-            'vote_value'=>\Crypt::encrypt($validated['vote_value']),
-            'encrypted'=>true
+
+        $user = auth()->user();
+        $existingVote = $user->votes->firstWhere(function ($vote) use ($validated) {
+            return Crypt::decrypt($vote->candidate_id) == $validated['candidate_id'];
+        });
+
+        if ($existingVote) {
+            $existingVote->update([
+                'vote_value' => Crypt::encrypt($validated['vote_value']),
+            ]);
+
+            return response()->json([
+                'message' => 'Vote updated successfully.',
+            ]);
+        }
+
+        Vote::create([
+            'user_id' => $user->id,
+            'candidate_id' => Crypt::encrypt($validated['candidate_id']),
+            'vote_value' => Crypt::encrypt($validated['vote_value']),
+            'encrypted' => true,
         ]);
 
         return response()->json([
-            'message'=>'Vote submitted successfully.',
-            'vote_id'=>$vote->id,
-        ],201);
+            'message' => 'Vote submitted successfully.',
+        ], 201);
     }
+
 
     public function myVotes()
     {

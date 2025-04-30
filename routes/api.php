@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CandidateController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\QuestionController;
+use App\Http\Controllers\API\LeaderboardController;
 
 
 /* User routes */
@@ -25,5 +26,8 @@ Route::middleware('auth:sanctum')->get('/my-votes', [VoteController::class, 'myV
 /* Questions */
 Route::middleware('auth:sanctum')->post('/questions', [QuestionController::class, 'store']);
 Route::middleware('auth:sanctum')->get('/my-questions', [QuestionController::class, 'myQuestions']);
+
+/* leaderboard */
+Route::get('/leaderboard', [LeaderboardController::class, 'index']);
 
 
