@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('candidate_id')->constrained('candidates');
-            $table->tinyInteger('vote_value');
+            $table->text('candidate_id');
+            $table->text('vote_value');
             $table->boolean('encrypted')->default(true);
             $table->timestamps();
         });

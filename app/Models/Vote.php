@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Crypt;
 
 class Vote extends Model
 {
@@ -23,4 +24,14 @@ class Vote extends Model
     {
         return $this->belongsTo(Candidate::class);
     }
+    public function getDecryptedVoteValueAttribute()
+    {
+        return Crypt::decrypt($this->vote_value);
+    }
+
+    public function getDecryptedCandidateIdAttribute()
+    {
+        return Crypt::decrypt($this->candidate_id);
+    }
+
 }
