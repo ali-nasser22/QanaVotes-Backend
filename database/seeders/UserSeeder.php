@@ -20,5 +20,11 @@ class UserSeeder extends Seeder
             'login_id'=>'ABC123',
             'password' => Hash::make('12345678'),
         ]);
+        User::create([
+            'full_name'=>'Mariam Ahmad',
+            'ssn'=>'5',
+            'login_id'=>'ABC456',
+            'password' => Hash::make('12345678'),
+        ]);
     }
 }

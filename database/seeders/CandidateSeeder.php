@@ -14,14 +14,19 @@ class CandidateSeeder extends Seeder
     public function run(): void
     {
         Candidate::create([
-            'full_name' => 'Hassan Al Sayed',
+            'full_name' => 'Ahmad Al Moussa',
             'bio' => 'Focused on youth empowerment and education.',
             'photo_url' => null,
         ]);
 
         Candidate::create([
-            'full_name' => 'Mohammad Kresht',
+            'full_name' => 'Sara Ali',
             'bio' => 'Passionate about public services and sustainability.',
+            'photo_url' => null,
+        ]);
+        Candidate::create([
+            'full_name' => 'Charbel Hanna',
+            'bio' => 'Focused on Health and Safety.',
             'photo_url' => null,
         ]);
     }
